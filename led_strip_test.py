@@ -13,7 +13,8 @@ led_strip = plasma.WS2812(NUM_LEDS, 0, 0, plasma_stick.DAT, color_order=plasma.C
 led_strip.start()
 
 noise = ADC(Pin(26))
-led = Pin("LED", Pin.OUT)
+# led = Pin("LED", Pin.OUT)
+led = Pin(25, Pin.OUT)
 
 class Glow():
     r = 0
@@ -117,7 +118,6 @@ glow = Glow()
 
 while True:
     sound_level = noise.read_u16()
-#     print (f'sound level: {sound_level}')
     if sound_level > 35000:
         led.value(1)
         r = 255
@@ -125,16 +125,9 @@ while True:
     else:
         if r == 0:
             b = glow.glow()
-#             sleep(0.25)
-            
         else:
             led.value(0)
             r,g,b = fade(r,g,b)
     light_on(r,g,b)
-
-#     print(f'r:{r} g:{g} b:{b}')
     sleep(0.01)
-    
-#     sleep(0.01)
-#     print(f'r,g,b {r},{g},{b}')
     
